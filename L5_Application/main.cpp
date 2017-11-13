@@ -343,6 +343,27 @@ void producer(void *prod){
 	int light = light_sensor_avg();
 }
 
+void consumer(void *  pvParam)
+{
+    FILE *fp;
+    int myInt = 0;
+    fp = fopen ("sensor.txt","a");
+    while(1)
+    {
+        if(!xQueueReceive(light_handle, &myInt, 1000)) {
+            puts("Failed to receive item within 1000 ms");
+        }
+        else {
+            fprintf(fp,"%i, %i\n", time, myInt);
+            printf("%i, %i\n", time, myInt);
+        }
+    }
+    fclose (fp);
+    printf("File Closed Successfully");
+};
+
+
+
 int main(void) {
 	/**
 	 * A few basic tasks for this bare-bone system :
@@ -376,8 +397,10 @@ int main(void) {
 
 
 	//lab8
-	xTaskCreate(producer, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,  &handler);
 
+    light_handle = xQueueCreate(1, sizeof(int));
+	light_handle = xTaskCreate(producer, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,&handler);
+	light_handle = xTaskCreate(consumer,"consumer_task",2048,NULL,PRIORITY_MEDIUM,&handler);
 
 
 
