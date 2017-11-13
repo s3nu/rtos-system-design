@@ -339,6 +339,14 @@ int light_sensor_avg(){
 
 void producer(void *prod){
 	int light = light_sensor_avg();
+	long check;
+	check = xQueueSend(light_handle, &light, 1000); //wait 1000 ticks to send queue
+	if (check) {
+		printf(" ok: %d", check);
+	}
+	else {
+		printf(" not ok: %d", check);
+	}
 }
 
 int main(void) {
