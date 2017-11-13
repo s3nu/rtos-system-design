@@ -33,7 +33,7 @@
 #include "event_groups.h"
 #include "io.hpp"
 #include "time.h"
-
+#include "storage.hpp"
 
 
 /**
@@ -327,6 +327,7 @@ EventGroupHandle_t tevent = xEventGroupCreate();
 static uint8_t args =0;
 TaskHandle_t handler = NULL;
 uint32_t STACK_SIZE = 2048;
+int size = 0;
 
 int light_sensor_avg(){
 	int light = 0;
@@ -352,21 +353,16 @@ void producertask(void *prod){
 
 void consumertask(void *  pvParam)
 {
-    FILE *fp;
-    int myInt = 0;
-    fp = fopen ("sensor.txt","a");
-    while(1)
-    {
-        if(!xQueueReceive(light_handle, &myInt, 1000)) {
-            puts("Failed to receive item within 1000 ms");
-        }
-        else {
-            printf("%i, %i\n", time, myInt);
-            printf("%i, %i\n", time, myInt);
-        }
-    }
-    fclose (fp);
-    printf("File Closed Successfully");
+	int myInt = 0;
+	if(!xQueueReceive(light_handle, &myInt, 1000)) {
+		puts("Failed to receive item within 1000 ms");
+	}
+	else {
+		Storage::append("sensor.txt", &myInt, 1, 0);
+		Storage::read("sensor.txt", &size, 1, 0);
+		printf("%i, %i\n", time, myInt);
+		printf("%i, %i\n", time, myInt);
+	}
 };
 
 
