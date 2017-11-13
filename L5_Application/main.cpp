@@ -337,15 +337,15 @@ int light_sensor_avg(){
 	return light/100;
 }
 
-void producer(void *prod){
+void producertask(void *prod){
 	int light = light_sensor_avg();
 	long check;
 	check = xQueueSend(light_handle, &light, 1000); //wait 1000 ticks to send queue
 	if (check) {
-		printf(" ok: %d", check);
+		printf(" OK: %ld", check);
 	}
 	else {
-		printf(" not ok: %d", check);
+		printf(" not ok: %ld", check);
 	}
 }
 
@@ -382,7 +382,7 @@ int main(void) {
 
 
 	//lab8
-	xTaskCreate(producer, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,  &handler);
+	xTaskCreate(producertask, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,  &handler);
 
 
 
