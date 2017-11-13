@@ -31,6 +31,8 @@
 #include <stdint.h>
 #include "uart0_min.h"
 #include "event_groups.h"
+#include "io.hpp"
+
 
 
 /**
@@ -319,6 +321,28 @@ void task2(void* p) {
 	}
 }
 
+QueueHandle_t light_handle = 0;
+EventGroupHandle_t tevent;
+tevent = xEventGroupCreate();
+static uint8_t args;
+args = 0;
+TaskHandle_t handler = NULL;
+uint32_t STACK_SIZE = 2048;
+
+int light_sensor_avg(){
+	int light = 0;
+	for (int i = 0; i < 100; ++i)
+	{
+		light += LS.getPercentValue();
+		printf("%i\n", light);
+	}
+	return (light/100)
+}
+
+void producer(void *prod){
+	int light = light_sensor_avg();
+}
+
 int main(void) {
 	/**
 	 * A few basic tasks for this bare-bone system :
@@ -338,16 +362,23 @@ int main(void) {
 	//scheduler_add_task(new lab5());
 	//scheduler_add_task(new lab6());
 
-	EventGroupHandle_t tevent;
-	tevent = xEventGroupCreate();
-	static uint8_t args;
-	args = 0;
-	TaskHandle_t handler = NULL;
-	uint32_t STACK_SIZE = 2048;
-	xTaskCreate( task1, "task_1", STACK_SIZE, &args, PRIORITY_HIGH,  &handler);
-	vTaskDelay(50);
-	xTaskCreate( task2, "task_2", STACK_SIZE, &args, PRIORITY_HIGH, &handler);
-	vTaskStartScheduler();
+	//lab7
+	// EventGroupHandle_t tevent;
+	// tevent = xEventGroupCreate();
+	// static uint8_t args;
+	// args = 0;
+	// TaskHandle_t handler = NULL;
+	// uint32_t STACK_SIZE = 2048;
+	// xTaskCreate( task1, "task_1", STACK_SIZE, &args, PRIORITY_HIGH,  &handler);
+	// vTaskDelay(50);
+	// xTaskCreate( task2, "task_2", STACK_SIZE, &args, PRIORITY_HIGH, &handler);
+	// vTaskStartScheduler();
+
+
+	//lab8
+	xTaskCreate(producer, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,  &handler);
+
+
 
 
 	scheduler_add_task(new terminalTask(PRIORITY_HIGH));
