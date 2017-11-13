@@ -403,11 +403,6 @@ int main(void) {
 
 
 	//lab8
-<<<<<<< HEAD
-=======
-	xTaskCreate(producertask, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,  &handler);
->>>>>>> 5e864410508f2a0e8b0451a93bcc474ee989973b
-
     light_handle = xQueueCreate(1, sizeof(int));
 	light_handle = xTaskCreate(producer, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,&handler);
 	light_handle = xTaskCreate(consumer,"consumer_task",2048,NULL,PRIORITY_MEDIUM,&handler);
