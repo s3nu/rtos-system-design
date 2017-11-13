@@ -32,6 +32,7 @@
 #include "uart0_min.h"
 #include "event_groups.h"
 #include "io.hpp"
+#include "time.h"
 
 
 
@@ -349,7 +350,7 @@ void producertask(void *prod){
 	}
 }
 
-void consumer(void *  pvParam)
+void consumertask(void *  pvParam)
 {
     FILE *fp;
     int myInt = 0;
@@ -360,7 +361,7 @@ void consumer(void *  pvParam)
             puts("Failed to receive item within 1000 ms");
         }
         else {
-            fprintf(fp,"%i, %i\n", time, myInt);
+            printf("%i, %i\n", time, myInt);
             printf("%i, %i\n", time, myInt);
         }
     }
@@ -403,10 +404,11 @@ int main(void) {
 
 
 	//lab8
-    light_handle = xQueueCreate(1, sizeof(int));
-	light_handle = xTaskCreate(producer, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,&handler);
-	light_handle = xTaskCreate(consumer,"consumer_task",2048,NULL,PRIORITY_MEDIUM,&handler);
-
+    light_handle = xQueueCreate(3, sizeof(int));
+    tevent = xEventGroupCreate();
+	xTaskCreate(producertask, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,&handler);
+	xTaskCreate(consumertask,"consumer_task",2048,NULL,PRIORITY_MEDIUM,&handler);
+	vTaskStartScheduler();
 
 
 	scheduler_add_task(new terminalTask(PRIORITY_HIGH));
