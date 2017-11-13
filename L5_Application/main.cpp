@@ -322,10 +322,8 @@ void task2(void* p) {
 }
 
 QueueHandle_t light_handle = 0;
-EventGroupHandle_t tevent;
-tevent = xEventGroupCreate();
-static uint8_t args;
-args = 0;
+EventGroupHandle_t tevent = xEventGroupCreate();
+static uint8_t args =0;
 TaskHandle_t handler = NULL;
 uint32_t STACK_SIZE = 2048;
 
@@ -336,11 +334,19 @@ int light_sensor_avg(){
 		light += LS.getPercentValue();
 		printf("%i\n", light);
 	}
-	return (light/100)
+	return light/100;
 }
 
-void producer(void *prod){
+void producertask(void *prod){
 	int light = light_sensor_avg();
+	long check;
+	check = xQueueSend(light_handle, &light, 1000); //wait 1000 ticks to send queue
+	if (check) {
+		printf(" OK: %ld", check);
+	}
+	else {
+		printf(" not ok: %ld", check);
+	}
 }
 
 void consumer(void *  pvParam)
@@ -397,6 +403,10 @@ int main(void) {
 
 
 	//lab8
+<<<<<<< HEAD
+=======
+	xTaskCreate(producertask, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,  &handler);
+>>>>>>> 5e864410508f2a0e8b0451a93bcc474ee989973b
 
     light_handle = xQueueCreate(1, sizeof(int));
 	light_handle = xTaskCreate(producer, "producer", STACK_SIZE, &args, PRIORITY_MEDIUM,&handler);
