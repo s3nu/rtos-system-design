@@ -70,6 +70,8 @@ bool terminalTask::taskEntry()
     /* remoteTask() creates shared object in its init(), so we can get it now */
     CommandProcessor &cp = mCmdProc;
 
+    cp.addHandler(RTOSProducerSuspendOrResume,  "task1", "Suspend or resume 'consumertask'");
+    cp.addHandler(RTOSConsumerSuspendOrResume,  "task2", "Suspend or resume 'producertask'"); 
     // System information handlers
     cp.addHandler(taskListHandler, "info",    "Task/CPU Info.  Use 'info 200' to get CPU during 200ms");
     cp.addHandler(memInfoHandler,  "meminfo", "See memory info");
