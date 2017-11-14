@@ -25,7 +25,9 @@
 
 #include "command_handler.hpp"
 
+CMD_HANDLER_FUNC(RTOSProducerSuspendOrResume);
 
+CMD_HANDLER_FUNC(RTOSConsumerSuspendOrResume);
 
 /// Handler for task list & CPU Information
 CMD_HANDLER_FUNC(taskListHandler);
