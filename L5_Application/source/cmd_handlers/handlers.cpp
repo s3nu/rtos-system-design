@@ -45,7 +45,37 @@
 #include "c_tlm_stream.h"
 #include "c_tlm_var.h"
 
+CMD_HANDLER_FUNC(RTOSProducerSuspendOrResume){
+    //Our parameter was the orientation tasks' pointer, but you may want to check for NULL pointer first.
+    scheduler_task *producer = scheduler_task::getTaskPtrByName("task1");
 
+    // You can use FreeRTOS API or the wrapper resume() or suspend() methods
+    if ((cmdParams == "resume")&&(cmdParams == "task1")) {
+        vTaskResume(producer->getTaskHandle());  // Can also use: compute->resume();
+    }
+    else if ((cmdParams == "suspend")&&(cmdParams == "task1")){
+        vTaskSuspend(producer->getTaskHandle()); // Can also use: compute->suspend();
+    }
+    else{}
+    
+    return true;
+}
+
+CMD_HANDLER_FUNC(RTOSConsumerSuspendOrResume){
+    //Our parameter was the orientation tasks' pointer, but you may want to check for NULL pointer first.
+    scheduler_task *consumer_task = scheduler_task::getTaskPtrByName("task2");
+
+    // You can use FreeRTOS API or the wrapper resume() or suspend() methods
+    if ((cmdParams == "resume")&&(cmdParams == "task1")) {
+        vTaskResume(consumer_task->getTaskHandle());  // Can also use: compute->resume();
+    }
+    else if ((cmdParams == "suspend")&&(cmdParams == "task1")){
+        vTaskSuspend(consumer_task->getTaskHandle()); // Can also use: compute->suspend();
+    }
+    else{}
+    
+    return true;
+}
 
 CMD_HANDLER_FUNC(taskListHandler)
 {
