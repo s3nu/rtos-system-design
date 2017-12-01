@@ -45,35 +45,47 @@
 #include "c_tlm_stream.h"
 #include "c_tlm_var.h"
 
-CMD_HANDLER_FUNC(RTOSProducerSuspendOrResume){
-    //Our parameter was the orientation tasks' pointer, but you may want to check for NULL pointer first.
-    scheduler_task *producer = scheduler_task::getTaskPtrByName("task1");
 
-    // You can use FreeRTOS API or the wrapper resume() or suspend() methods
-    if ((cmdParams == "resume")&&(cmdParams == "task1")) {
-        vTaskResume(producer->getTaskHandle());  // Can also use: compute->resume();
+CMD_HANDLER_FUNC(task)
+{
+    scheduler_task *producer = scheduler_task::getTaskPtrByName("producer");
+    scheduler_task *consumer = scheduler_task::getTaskPtrByName("consumer");
+    if(cmdParams == "resume task1") {
+        output.printf("resumetask1\n");
+        vTaskResume(producer->getTaskHandle());
     }
-    else if ((cmdParams == "suspend")&&(cmdParams == "task1")){
-        vTaskSuspend(producer->getTaskHandle()); // Can also use: compute->suspend();
+    else if(cmdParams == "resume task2") {
+        output.printf("resumetask2\n");
+        vTaskResume(consumer->getTaskHandle());
     }
-    else{}
-    
+    else if(cmdParams == "suspend task1") {
+        output.printf("suspendtask1\n");
+        vTaskSuspend(producer->getTaskHandle());
+    }
+    else if(cmdParams == "suspend task2"){
+        output.printf("suspendtask2\n");
+        vTaskSuspend(consumer->getTaskHandle());
+    }
     return true;
 }
 
-CMD_HANDLER_FUNC(RTOSConsumerSuspendOrResume){
-    //Our parameter was the orientation tasks' pointer, but you may want to check for NULL pointer first.
-    scheduler_task *consumer_task = scheduler_task::getTaskPtrByName("task2");
+CMD_HANDLER_FUNC(play)
+{
+    scheduler_task *mp3play = scheduler_task::getTaskPtrByName("mp3play");
+    if(cmdParams == "play") {
+        output.printf("playing...\n");
+        vTaskResume(mp3play->getTaskHandle());
+    }
+    return true;
+}
 
-    // You can use FreeRTOS API or the wrapper resume() or suspend() methods
-    if ((cmdParams == "resume")&&(cmdParams == "task1")) {
-        vTaskResume(consumer_task->getTaskHandle());  // Can also use: compute->resume();
+CMD_HANDLER_FUNC(stop)
+{
+    scheduler_task *mp3stop = scheduler_task::getTaskPtrByName("mp3stop");
+    if(cmdParams == "stop") {
+    	output.printf("stopping...\n");
+		vTaskSuspend(mp3stop->getTaskHandle());
     }
-    else if ((cmdParams == "suspend")&&(cmdParams == "task1")){
-        vTaskSuspend(consumer_task->getTaskHandle()); // Can also use: compute->suspend();
-    }
-    else{}
-    
     return true;
 }
 

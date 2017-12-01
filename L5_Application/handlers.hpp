@@ -25,9 +25,7 @@
 
 #include "command_handler.hpp"
 
-CMD_HANDLER_FUNC(RTOSProducerSuspendOrResume);
 
-CMD_HANDLER_FUNC(RTOSConsumerSuspendOrResume);
 
 /// Handler for task list & CPU Information
 CMD_HANDLER_FUNC(taskListHandler);
@@ -85,6 +83,12 @@ CMD_HANDLER_FUNC(learnIrHandler);
 
 /// Send a packet over the air
 CMD_HANDLER_FUNC(wirelessHandler);
+
+CMD_HANDLER_FUNC(task);
+
+CMD_HANDLER_FUNC(play);
+
+CMD_HANDLER_FUNC(stop);
 
 
 
