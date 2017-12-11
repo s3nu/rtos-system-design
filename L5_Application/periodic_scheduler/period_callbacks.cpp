@@ -29,10 +29,10 @@
  */
 
 #include <stdint.h>
+#include <stdio.h>
 #include "io.hpp"
 #include "periodic_callback.h"
-
-
+#include "gpio.hpp"
 
 /// This is the stack size used for each of the period tasks (1Hz, 10Hz, 100Hz, and 1000Hz)
 const uint32_t PERIOD_TASKS_STACK_SIZE_BYTES = (512 * 4);
@@ -58,24 +58,28 @@ bool period_reg_tlm(void)
     return true; // Must return true upon success
 }
 
-
-
-void period_1Hz(void)
+/**
+ * Below are your periodic functions.
+ * The argument 'count' is the number of times each periodic task is called.
+ */
+void period_1Hz(uint32_t count)
 {
-    LE.toggle(1);
+	LE.toggle(1);
 }
 
-void period_10Hz(void)
+void period_10Hz(uint32_t count)
 {
     LE.toggle(2);
 }
 
-void period_100Hz(void)
+void period_100Hz(uint32_t count)
 {
     LE.toggle(3);
 }
 
-void period_1000Hz(void)
+// 1Khz (1ms) is only run if Periodic Dispatcher was configured to run it at main():
+// scheduler_add_task(new periodicSchedulerTask(run_1Khz = true));
+void period_1000Hz(uint32_t count)
 {
     LE.toggle(4);
 }

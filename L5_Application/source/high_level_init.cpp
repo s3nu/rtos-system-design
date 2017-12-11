@@ -84,7 +84,7 @@ void high_level_init(void)
 {
     // Initialize all board pins (early) that are connected internally.
     board_io_pins_initialize();
-    
+
     /**
      * Initialize the Peripherals used in the system.
      * I2C2 : Used by LED Display, Acceleration Sensor, Temperature Sensor
@@ -95,6 +95,7 @@ void high_level_init(void)
     adc0_init();
     ssp1_init();
     ssp0_init(SYS_CFG_SPI0_CLK_MHZ);
+
     if (!I2C2::getInstance().init(SYS_CFG_I2C2_CLK_KHZ)) {
         puts("ERROR: Possible short on SDA or SCL wire (I2C2)!");
     }
@@ -124,7 +125,7 @@ void high_level_init(void)
     /* Add default telemetry components if telemetry is enabled */
     #if SYS_CFG_ENABLE_TLM
         tlm_component_add(SYS_CFG_DISK_TLM_NAME);
-        tlm_component_add(SYS_CFG_DEBUG_DLM_NAME);
+        tlm_component_add(SYS_CFG_DEBUG_TLM_NAME);
     #endif
 
     /**

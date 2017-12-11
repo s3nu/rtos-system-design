@@ -84,12 +84,8 @@ CMD_HANDLER_FUNC(learnIrHandler);
 /// Send a packet over the air
 CMD_HANDLER_FUNC(wirelessHandler);
 
-CMD_HANDLER_FUNC(task);
 
-CMD_HANDLER_FUNC(play);
+CMD_HANDLER_FUNC(RTOSProducerSuspendOrResume);
 
-CMD_HANDLER_FUNC(stop);
-
-
-
+CMD_HANDLER_FUNC(RTOSConsumerSuspendOrResume);
 #endif /* HANDLERS_HPP_ */
