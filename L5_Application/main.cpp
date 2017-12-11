@@ -36,6 +36,9 @@
 #include "storage.hpp"
 #include "command_handler.hpp"
 #include <string.h>
+#include "MP3.hpp"
+#include "Decoder.hpp"
+#include "uart3.hpp"
 
 /**
  * The main() creates tasks or "threads".  See the documentation of scheduler_task class at scheduler_task.hpp
@@ -482,7 +485,25 @@ public:
 private:
 	uint8_t buffer[256] = { 0 };
 };
+class lcd: public scheduler_task {
+public:
+	lcd() :
+		scheduler_task("lcd", 4098, PRIORITY_HIGH) {
+	}
 
+	bool init(void) {
+		//UART driver
+		return true;
+	}
+
+	bool run(void *p) {
+		vTaskDelay(1000);
+		Uart3& u3 = Uart3::getInstance();
+		u3.init(2400); /* Init baud rate */
+		u3.putline("56 Nights Future.mp3\n");
+		true;
+	}
+};
 int main(void) {
 	/**
 	 * A few basic tasks for this bare-bone system :
@@ -519,7 +540,10 @@ int main(void) {
 	//
 
 	//mp3 project
-	scheduler_add_task(new mp3control(PRIORITY_MEDIUM));
+	//scheduler_add_task(new mp3control(PRIORITY_MEDIUM));
+	scheduler_add_task(new decoderRegister());
+	scheduler_add_task(new MP3());
+	scheduler_add_task(new lcd());
 	//scheduler_add_task(new mp3stop(PRIORITY_MEDIUM));
 
 
