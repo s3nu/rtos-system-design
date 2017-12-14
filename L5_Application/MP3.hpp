@@ -1,7 +1,11 @@
 
+
 #include "tasks.hpp"
 #include "gpio.hpp"
-#include "Decoder.hpp"
+#include "ff.h"
+#include "circular_buffer.hpp"
+
+
 
 extern GPIO dreqPin;
 extern GPIO XCS;
@@ -16,6 +20,4 @@ public:
 	bool run(void *param);
 	bool init();
 	void readAndSend();
-	void lowerVolume();
-	void raiseVolume();
 };
