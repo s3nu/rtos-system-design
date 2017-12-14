@@ -11,7 +11,10 @@ extern GPIO dreqPin;
 extern GPIO XCS;
 extern GPIO XDCS;
 extern GPIO decodeRST;
-
+extern GPIO playOrPausePin;
+extern GPIO nextSong;
+extern int counter;
+extern bool notPause;
 
 class MP3: public scheduler_task {
 public:
