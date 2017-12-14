@@ -45,6 +45,8 @@
 #include "c_tlm_stream.h"
 #include "c_tlm_var.h"
 
+#include "MP3.hpp"
+
 
 CMD_HANDLER_FUNC(task)
 {
@@ -69,12 +71,16 @@ CMD_HANDLER_FUNC(task)
     return true;
 }
 
-CMD_HANDLER_FUNC(play)
+CMD_HANDLER_FUNC(mp3_player)
 {
-    scheduler_task *mp3play = scheduler_task::getTaskPtrByName("mp3play");
+    scheduler_task *mp3 = scheduler_task::getTaskPtrByName("mp3");
     if(cmdParams == "play") {
         output.printf("playing...\n");
-        vTaskResume(mp3play->getTaskHandle());
+        vTaskResume(mp3->getTaskHandle());
+    }
+    else if(cmdParams == "stop") {
+    	output.printf("stop play...\n");
+    	vTaskSuspend(mp3->getTaskHandle());
     }
     return true;
 }

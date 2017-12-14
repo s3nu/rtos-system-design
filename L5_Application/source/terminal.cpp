@@ -71,7 +71,7 @@ bool terminalTask::taskEntry()
     CommandProcessor &cp = mCmdProc;
 
     cp.addHandler(task, "task", "suspend producer or consumer");
-    cp.addHandler(play, "play", "play song");
+    cp.addHandler(mp3_player, "play or stop", "play song or stop song");
     cp.addHandler(stop, "stop", "stop song");
 
 

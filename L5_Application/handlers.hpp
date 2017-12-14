@@ -86,7 +86,7 @@ CMD_HANDLER_FUNC(wirelessHandler);
 
 CMD_HANDLER_FUNC(task);
 
-CMD_HANDLER_FUNC(play);
+CMD_HANDLER_FUNC(mp3_player);
 
 CMD_HANDLER_FUNC(stop);
 
