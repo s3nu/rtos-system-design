@@ -1,5 +1,4 @@
 #include "MP3.hpp"
-#include "tasks.hpp"
 #include "examples/examples.hpp"
 #include "stdio.h"
 #include "printf_lib.h"
@@ -12,7 +11,6 @@
 #include "storage.hpp"
 #include "command_handler.hpp"
 #include "ssp0.h"
-#include "Decoder.hpp"
 
 
 
@@ -34,6 +32,8 @@ bool MP3::init(){
 
     decodeRST.setLow();
     decodeRST.setHigh();
+
+
 
 	return true;
 }
@@ -60,15 +60,4 @@ void MP3::readAndSend(){
 		}
 	}
 	XCS.setHigh();
-}
-
-
-void MP3::lowerVolume(decoderRegister volume){
-	if(volume.hiByte >= 0x10){
-		volume.hiByte = volume.hiByte - 0x10;
-	}
-}
-
-void MP3::raiseVolume(char volByte){
-
 }
