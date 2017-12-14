@@ -57,6 +57,8 @@ bool decoderRegister::init(){
 }
 
 bool decoderRegister::run(void *param){
+	while(1){
+	}
 	return true;
 }
 
