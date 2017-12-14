@@ -26,12 +26,12 @@
 
 
 
-bool LCD::run(){
+bool LCD::run(void *param){
 
 	return true;
 }
 
-bool LCD::init(){
+bool LCD::init(void *param){
 	vTaskDelay(1000);
 	Uart3& u3 = Uart3::getInstance();
 	u3.init(38400,50,50);

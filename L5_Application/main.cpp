@@ -39,6 +39,7 @@
 #include "MP3.hpp"
 #include "Decoder.hpp"
 #include "uart3.hpp"
+#include "LCD.hpp"
 //#include "labs.cpp"
 
 /**
@@ -205,11 +206,9 @@ int main(void) {
 	//scheduler_add_task(new mp3control(PRIORITY_MEDIUM));
 	scheduler_add_task(new decoderRegister());
 	scheduler_add_task(new MP3());
-	//scheduler_add_task(new lcd());
+	scheduler_add_task(new LCD());
 	//scheduler_add_task(new mp3stop(PRIORITY_MEDIUM));
 	//scheduler_add_task(new button_pushed());
-	//scheduler_add_task(new LCD());
-
 
 	scheduler_add_task(new terminalTask(PRIORITY_HIGH));
 

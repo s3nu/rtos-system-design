@@ -17,8 +17,8 @@ class LCD: public scheduler_task {
 public:
 	LCD():
 		scheduler_task("LCD", 4098, PRIORITY_HIGH){}
-	bool run();
-	bool init();
+	bool run(void *param);
+	bool init(void *param);
 	void push_to_lcd(char line);
 friend class MP3;
 };
