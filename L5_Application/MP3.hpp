@@ -1,5 +1,3 @@
-
-
 #include "tasks.hpp"
 #include "gpio.hpp"
 #include "ff.h"
@@ -11,8 +9,10 @@ extern GPIO dreqPin;
 extern GPIO XCS;
 extern GPIO XDCS;
 extern GPIO decodeRST;
-extern GPIO playOrPausePin;
+extern GPIO playPin;
+extern GPIO pausePin;
 extern GPIO nextSong;
+extern GPIO previousSong;
 extern int counter;
 extern bool notPause;
 
