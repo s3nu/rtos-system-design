@@ -29,7 +29,6 @@ void LabUART::init_my_uart2(int portValue)
     else if(portValue == 3){
         LPC_SC->PCONP |= (1<<25);
         //init uart3
-        //zero bits 18 and 19 of PCLKSEL1 register for UART2
         LPC_SC->PCLKSEL1 &= ~(0x3 << 18);
         //enable DLAB
         LPC_UART3->LCR |= (1<<7);

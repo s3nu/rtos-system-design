@@ -14,14 +14,10 @@ void ADCDriver::adcInitBurstMode()
 {
 //    /* Power on ADC */
 //    LPC_SC->PCONP |= (1 << 12);
-//
-//    /* Configure clock as CCLK / 8 (12 MHz, assuming 96MHz system clock) */
 //    LPC_SC->PCLKSEL0 |= (3 << 24);
 //    LPC_ADC->ADCR &= ~(0xFF << 8);
-//
 //    /* Enable ADC */
 //    LPC_ADC->ADCR |= (1 << 21);
-//
 //    /* Start burst mode */
 //    LPC_ADC->ADCR &= ~(7 << 24);
 //    LPC_ADC->ADCR |= (1 << 16);
